@@ -16,7 +16,7 @@ function performAction(e) {
   getZip(baseURL, newZip, apiKey).then(function (data) {
     postData("/add", {
       temperature: data.main.temp,
-      date: date,
+      date: d,
       content: feelings,
     }).then(function () {
       updateUI();
@@ -53,8 +53,6 @@ const postData = async (url = "/add", data = {}) => {
   try {
     const newData = await res.json();
     return newData;
-
-    return newData;
   } catch (error) {}
 };
 
@@ -62,7 +60,7 @@ const updateUI = async () => {
   const request = await fetch("/all");
   try {
     const allData = await request.json();
-    document.getElementById("date").innerHTML = allData.d;
+    document.getElementById("date").innerHTML = allData.date;
     document.getElementById("temp").innerHTML = allData.temperature;
     document.getElementById("content").innerHTML = allData.content;
   } catch (error) {
