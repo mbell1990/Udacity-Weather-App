@@ -1,11 +1,10 @@
 /* Global Variables */
+let baseURL = "https://api.openweathermap.org/data/2.5/weather?zip=";
+const apiKey = "&appid=bbcbcf9880f406de3b4994757d9c97c6&units=metric';/Celcius";
 
 // Create a new date instance dynamically with JS
 let d = new Date();
-let newDate = d.getMonth() + "." + d.getDate() + "." + d.getFullYear();
-
-let baseURL = "https://api.openweathermap.org/data/2.5/weather?zip=";
-let apiKey = "&appid=bbcbcf9880f406de3b4994757d9c97c6";
+let newDate = d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear();
 
 document.getElementById("generate").addEventListener("click", performAction);
 
@@ -16,7 +15,7 @@ function performAction(e) {
   getZip(baseURL, newZip, apiKey).then(function (data) {
     postData("/add", {
       temperature: data.main.temp,
-      date: d,
+      date: newDate,
       content: feelings,
     }).then(function () {
       updateUI();
@@ -61,7 +60,8 @@ const updateUI = async () => {
   try {
     const allData = await request.json();
     document.getElementById("date").innerHTML = allData.date;
-    document.getElementById("temp").innerHTML = allData.temperature;
+    document.getElementById("temp").innerHTML =
+      Math.round(allData.temperature) + "degrees";
     document.getElementById("content").innerHTML = allData.content;
   } catch (error) {
     console.log("error", error);
