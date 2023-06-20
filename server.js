@@ -38,7 +38,7 @@ function listening() {
 
 // ***  Routes and GET requests ***
 
-// get request with callback function added
+// get request with callback - this gets the data required
 
 app.get("/all", sendData);
 
@@ -49,15 +49,20 @@ function sendData(req, res) {
   projectData = {}; // try
 }
 
-// Post route
+// Post route - POST request sends data to the project's endpoint, where it is stored and can be accessed through a GET request
+// /add is added to postData function in app.js
 
-app.post("/add", addData);
+app.post("/add", addData); // /add this the url we want to use
+
+// put data into server that we recievied from the postData function in app/js via getZip get request
 
 function addData(req, res) {
   newEntry = {
-    temperature: req.body.temperature,
+    weather: req.body.weather,
+    city: req.body.city,
+    temperature: req.body.temperature, // data received by using req.body and later adds to projectData
+    icon: req.body.icon,
     date: req.body.date,
-    content: req.body.content,
   };
 
   projectData = newEntry;
